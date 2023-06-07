@@ -51,6 +51,8 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             } catch (error) {
                 console.log(error);
             }
+
+            return productInfo;
         }, {waitUntil: 'ul.js-catalog-pagination'})
     }
     } catch (error) {
