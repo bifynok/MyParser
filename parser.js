@@ -64,6 +64,12 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
     }
 
     await browser.close();
+
+    for(let productList of receivedInfo){
+        for(let product of productList){
+            console.log(product.productName, ' - ', product.productPrice)
+        }
+    }
     } catch (error) {
         console.log(error);
     }
