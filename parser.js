@@ -40,7 +40,10 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             let productInfo = [];
 
             try{
-
+                let productCardsList = document.querySelectorAll('div.product-item.goods-item')
+                productCardsList.forEach(productCard => {
+                    
+                })
             } catch (error) {
                 console.log(error);
             }
