@@ -14,13 +14,16 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             devtools: true      
         })
 
-        let page = await browser.newPage()
+    let page = await browser.newPage()
     await page.setViewport({
       width: 1400, height: 900
     })
 
     await page.goto(`${PageLink}${pageCounter}`)
     await page.waitForSelector('ul.js-catalog-pagination')
+    let lastPage = await page.evaluate(async () => {
+        
+    }, {waitUntil: 'ul.js-catalog-pagination'});
     } catch (error) {
         console.log(error);
     }
