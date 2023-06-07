@@ -70,7 +70,9 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             console.log(product.productName, ' - ', product.productPrice)
         }
     }
+    
     } catch (error) {
         console.log(error);
+        await browser.close();
     }
 })();
