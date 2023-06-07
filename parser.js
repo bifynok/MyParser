@@ -62,6 +62,8 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             pageCounter++;
         }
     }
+
+    await browser.close();
     } catch (error) {
         console.log(error);
     }
