@@ -33,7 +33,8 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
     }, {waitUntil: 'ul.js-catalog-pagination'});
 
     while(isListable){
-        
+        await page.goto(`${PageLink}${pageCounter}`)
+        await page.waitForSelector('ul.js-catalog-pagination')
     }
     } catch (error) {
         console.log(error);
