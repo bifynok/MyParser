@@ -42,7 +42,11 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             try{
                 let productCardsList = document.querySelectorAll('div.product-item.goods-item')
                 productCardsList.forEach(productCard => {
-                    
+                    let phone = {
+                        productName: productCard.querySelector('a.product-item_name').innerText,
+                        productPrice: productCard.querySelector('div.product-item_price_current').innerText
+                      }          
+                      productInfo.push(phone);
                 })
             } catch (error) {
                 console.log(error);
