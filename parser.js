@@ -13,6 +13,12 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
             slowMo: 100,
             devtools: true      
         })
+
+        let page = await browser.newPage()
+    await page.setViewport({
+      width: 1400, height: 900
+    })
+    
     } catch (error) {
         console.log(error);
     }
