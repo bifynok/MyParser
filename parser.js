@@ -23,7 +23,7 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
     await page.waitForSelector('ul.js-catalog-pagination')
     let lastPage = await page.evaluate(async () => {
         try {
-            
+            let elements = document.querySelectorAll('[data-page]');
         } catch (error) {
             console.log(error);
         }
