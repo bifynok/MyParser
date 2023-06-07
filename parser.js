@@ -18,7 +18,8 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
     await page.setViewport({
       width: 1400, height: 900
     })
-    
+
+    await page.goto(`${PageLink}${pageCounter}`)
     } catch (error) {
         console.log(error);
     }
