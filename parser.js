@@ -24,6 +24,7 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
     let lastPage = await page.evaluate(async () => {
         try {
             let elements = document.querySelectorAll('[data-page]');
+            let lastElement = elements[elements.length - 1];
         } catch (error) {
             console.log(error);
         }
