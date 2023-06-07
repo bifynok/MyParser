@@ -1,78 +1,84 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
-let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
+let PageLink = "https://www.moyo.ua/ua/telecommunication/smart/?page=";
 
 (async () => {
-    let isListable = true;
-    let receivedInfo = [];
-    let pageCounter = 1;
-    let browser;
-    try{
-        browser = await puppeteer.launch({
-            headless: true,
-            slowMo: 100,
-            devtools: true      
-        })
+  let isListable = true;
+  let receivedInfo = [];
+  let pageCounter = 1;
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      slowMo: 100,
+      devtools: true,
+    });
 
-    let page = await browser.newPage()
+    let page = await browser.newPage();
     await page.setViewport({
-      width: 1400, height: 900
-    })
+      width: 1400,
+      height: 900,
+    });
 
-    await page.goto(`${PageLink}${pageCounter}`)
-    await page.waitForSelector('ul.js-catalog-pagination')
-    let lastPage = await page.evaluate(async () => {
+    await page.goto(`${PageLink}${pageCounter}`);
+    await page.waitForSelector("ul.js-catalog-pagination");
+    let lastPage = await page.evaluate(
+      async () => {
         try {
-            let elements = document.querySelectorAll('[data-page]');
-            let lastElement = elements[elements.length - 1];
-            let lastPageValue = lastElement.getAttribute('data-page'); 
-            return lastPageValue;
+          let elements = document.querySelectorAll("[data-page]");
+          let lastElement = elements[elements.length - 1];
+          let lastPageValue = lastElement.getAttribute("data-page");
+          return lastPageValue;
         } catch (error) {
+          console.log(error);
+        }
+      },
+      { waitUntil: "ul.js-catalog-pagination" }
+    );
+
+    while (isListable) {
+      await page.goto(`${PageLink}${pageCounter}`);
+      await page.waitForSelector("ul.js-catalog-pagination");
+
+      let getInfo = await page.evaluate(
+        async () => {
+          let productInfo = [];
+
+          try {
+            let productCardsList = document.querySelectorAll("div.product-item.goods-item");
+            productCardsList.forEach((productCard) => {
+              let phone = {
+                productName: productCard.querySelector("a.product-item_name").innerText,
+                productPrice: productCard.querySelector("div.product-item_price_current").innerText
+              };
+              productInfo.push(phone);
+            });
+          } catch (error) {
             console.log(error);
-        }
-    }, {waitUntil: 'ul.js-catalog-pagination'});
+          }
 
-    while(isListable){
-        await page.goto(`${PageLink}${pageCounter}`)
-        await page.waitForSelector('ul.js-catalog-pagination')
+          return productInfo;
+        },
+        { waitUntil: "ul.js-catalog-pagination" }
+      );
+      receivedInfo.push(getInfo);
 
-        let getInfo = await page.evaluate(async () => {
-            let productInfo = [];
-
-            try{
-                let productCardsList = document.querySelectorAll('div.product-item.goods-item')
-                productCardsList.forEach(productCard => {
-                    let phone = {
-                        productName: productCard.querySelector('a.product-item_name').innerText,
-                        productPrice: productCard.querySelector('div.product-item_price_current').innerText
-                      }          
-                      productInfo.push(phone);
-                })
-            } catch (error) {
-                console.log(error);
-            }
-
-            return productInfo;
-        }, {waitUntil: 'ul.js-catalog-pagination'})
-        receivedInfo.push(getInfo);
-
-        if(pageCounter >= lastPage){
-            isListable = false;
-        }else{
-            pageCounter++;
-        }
+      if (pageCounter >= lastPage) {
+        isListable = false;
+      } else {
+        pageCounter++;
+      }
     }
 
     await browser.close();
 
-    for(let productList of receivedInfo){
-        for(let product of productList){
-            console.log(product.productName, ' - ', product.productPrice)
-        }
+    for (let productList of receivedInfo) {
+      for (let product of productList) {
+        console.log(product.productName, " - ", product.productPrice);
+      }
     }
-    
-    } catch (error) {
-        console.log(error);
-        await browser.close();
-    }
+  } catch (error) {
+    console.log(error);
+    await browser.close();
+  }
 })();
