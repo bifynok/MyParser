@@ -38,6 +38,12 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
 
         let getInfo = await page.evaluate(async () => {
             let productInfo = [];
+
+            try{
+
+            } catch (error) {
+                console.log(error);
+            }
         }, {waitUntil: 'ul.js-catalog-pagination'})
     }
     } catch (error) {
