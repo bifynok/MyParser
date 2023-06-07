@@ -7,4 +7,8 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
     let receivedInfo = [];
     let pageCounter = 1;
     let browser;
+    try{
+    } catch (error) {
+        console.log(error);
+    }
 })();
