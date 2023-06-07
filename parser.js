@@ -37,7 +37,7 @@ let PageLink = 'https://www.moyo.ua/ua/telecommunication/smart/?page=';
         await page.waitForSelector('ul.js-catalog-pagination')
 
         let getInfo = await page.evaluate(async () => {
-            
+            let productInfo = [];
         }, {waitUntil: 'ul.js-catalog-pagination'})
     }
     } catch (error) {
